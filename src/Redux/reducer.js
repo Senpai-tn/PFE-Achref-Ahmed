@@ -1,7 +1,9 @@
 const initialState = {
+  user: {},
   annonceurs: [],
   chercheurs: [],
   ads: [],
+  admins: [],
   isRealData:
     localStorage.getItem("isRealData") == "true" ||
     localStorage.getItem("isRealData") == true,
@@ -24,6 +26,8 @@ function Reducer(state = initialState, action) {
       };
     case "adsList":
       return { ...state, ads: action.ads, isRealData: action.isRealData };
+    case "adminsList":
+      return { ...state, admins: action.admins, isRealData: action.isRealData };
     case "dataSource":
       localStorage.setItem("isRealData", action.isRealData);
       return { ...state, isRealData: action.isRealData };

@@ -13,13 +13,14 @@ import { useContext } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import { useTranslation } from 'react-i18next'
+import { IconButton } from '@mui/material'
 const Sidebar = () => {
   const { t, i18n } = useTranslation()
   const { dispatch } = useContext(DarkModeContext)
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/Home" style={{ textDecoration: 'none' }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
           <span className="logo">Misra</span>
         </Link>
       </div>
@@ -29,7 +30,7 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">{t('main')}</p>
-          <Link to="/Home" style={{ textDecoration: 'none' }}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <li>
               <DashboardIcon className="icon" />
               <span>{t('dashboard')}</span>
@@ -73,12 +74,17 @@ const Sidebar = () => {
               <span>{t('profile')}</span>
             </li>
           </Link>
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <IconButton
+            onClick={() => {
+              localStorage.setItem('user', null)
+              window.location.assign('/')
+            }}
+          >
             <li>
               <ExitToAppIcon className="icon" />
               <span>{t('logout')}</span>
             </li>
-          </Link>
+          </IconButton>
         </ul>
       </div>
 

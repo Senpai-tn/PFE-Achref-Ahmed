@@ -3,6 +3,7 @@ import axios from "axios";
 const fake = [
   {
     id: "14",
+    password: "string",
     firstName: "admin",
     lastName: "admin",
     email: "admin@misra.com",
@@ -26,21 +27,41 @@ const fake = [
 const getAllAdmins = (dispatch, state) => {
   try {
     if (state.isRealData) {
-      axios.get("http://41.231.54.51/server/advertiser").then((res) => {
+      axios.get("http://41.231.54.51/server/users").then((res) => {
         dispatch({
           type: "adminsList",
-          admins: res.data.list,
-          isRealData: true,
+          admins: res.data,
+          isRealData: false,
         });
       });
     } else {
-      dispatch({ type: "adminsList", admins: fake, isRealData: false });
+      dispatch({
+        type: "adminsList",
+        admins: fake,
+        isRealData: false,
+      });
     }
   } catch (error) {
-    dispatch({ type: "adminsList", admins: [], isRealData: false });
+    dispatch({
+      type: "adminsList",
+      admins: [],
+      isRealData: false,
+    });
   }
 };
 
-export const adminActions = {
+const updateProfile = (dispatch, state, user) => {
+  try {
+    if (state.isRealData) {
+      axios.put("http://41.231.54.51/server/users/" + user.id, user);
+    }
+    localStorage.setItem("user", JSON.stringify(user));
+  } catch (error) {
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+};
+
+export const adminsAction = {
   getAllAdmins,
+  updateProfile,
 };

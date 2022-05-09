@@ -3,8 +3,7 @@ import "./login.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import { Link } from "react-router-dom";
-import store from "../../Redux/store";
-import { getAllAdmins } from "../../Actions/Admin/adminActions";
+
 const defaultState = {
   name: null,
   email: null,
@@ -12,17 +11,12 @@ const defaultState = {
   nameError: null,
   emailError: null,
   passwordError: null,
-  items: store.getState().ads,
 };
 class Loginn extends React.Component {
   constructor() {
     super();
     this.state = defaultState;
     this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  componentDidMount() {
-    //getAllAdmins();
   }
   handleInputChange(event) {
     const target = event.target;
@@ -51,7 +45,6 @@ class Loginn extends React.Component {
       this.setState({ nameError, emailError, passwordError });
       return false;
     }
-
     return true;
   }
 
@@ -74,9 +67,7 @@ class Loginn extends React.Component {
                 <div class="container">
                   <div class="row">
                     <div class="col-md-9 col-lg-8 mx-auto">
-                      <h1 class="login-heading mb-4">
-                        Welcome {this.state.items.length} to MISRA
-                      </h1>
+                      <h1 class="login-heading mb-4">Welcome to MISRA</h1>
 
                       <form>
                         <div class="form-floating mb-3">
@@ -92,7 +83,7 @@ class Loginn extends React.Component {
                             value={this.state.email}
                             onChange={this.handleInputChange}
                           />
-                          <label htmlFor="floatingInput">Email address</label>
+                          <label for="floatingInput">Email address</label>
                           <span className="text-danger">
                             {this.state.emailError}
                           </span>
@@ -110,7 +101,7 @@ class Loginn extends React.Component {
                             value={this.state.password}
                             onChange={this.handleInputChange}
                           />
-                          <label htmlFor="floatingPassword">Password</label>
+                          <label for="floatingPassword">Password</label>
                           <span className="text-danger">
                             {this.state.passwordError}
                           </span>

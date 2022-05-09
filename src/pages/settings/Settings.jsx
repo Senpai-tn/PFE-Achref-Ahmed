@@ -1,11 +1,11 @@
 import './settings.scss'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../Components/navbar/Navbar'
 import Sidebar from '../../Components/sidebar/Sidebar'
 import { styled } from '@mui/material/styles'
 import MuiAlert from '@mui/material/Alert'
 import TableCell from '@mui/material/TableCell'
-
+import bcrypt from 'bcryptjs'
 import TableRow from '@mui/material/TableRow'
 
 import {
@@ -19,6 +19,8 @@ import {
 } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import EnhancedTable from '../../Components/Table/EnhancedTable'
+import { adminsAction } from '../../Actions/Admin/adminActions'
+import { fake } from '../../Actions/Govs/govsActions'
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
@@ -71,11 +73,25 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Settings = () => {
   const dispatch = useDispatch()
+  var state = useSelector((state) => state)
+  var tempUser = JSON.parse(localStorage.getItem('user'))
   const [nbMonths, setNbMonths] = useState(localStorage.getItem('nbMonths'))
   const [nbRows, setNbRows] = useState(localStorage.getItem('nbRows'))
   const [message, setMessage] = useState({ text: '', severity: 'warning' })
   const [showSnackbar, setShowSnackbar] = useState(false)
-  var isRealData = useSelector((state) => state.isRealData)
+  const [firstName, setfirstName] = useState(tempUser.firstName)
+  const [lastName, setlastName] = useState(tempUser.lastName)
+  const [password, setpassword] = useState('')
+  const [email, setemail] = useState(tempUser.email)
+  const [username, setusername] = useState(tempUser.username)
+  const [gov, setgov] = useState(tempUser.govId)
+
+  const { updateProfile } = adminsAction
+
+  useEffect(() => {
+    //updateProfile(dispatch, state, user)
+  }, [])
+
   const handleClose = (event, reason) => {
     setShowSnackbar(false)
   }
@@ -112,6 +128,18 @@ const Settings = () => {
       })
       dispatch({ type: 'nbRows', nbRows: nbRows })
     }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    firstName != '' && (tempUser.firstName = firstName)
+    lastName != '' && (tempUser.lastName = lastName)
+    email != '' && (tempUser.email = email)
+    username != '' && (tempUser.username = username)
+    gov != '' && (tempUser.govId = gov)
+    password != '' && (tempUser.password = bcrypt.hashSync(password))
+    updateProfile(dispatch, state, tempUser)
   }
 
   return (
@@ -151,7 +179,9 @@ const Settings = () => {
                   window.location.reload()
                 }, 800)
               }}
-              defaultChecked={isRealData == 'true' || isRealData == true}
+              defaultChecked={
+                state.isRealData == 'true' || state.isRealData == true
+              }
               inputProps={{ 'aria-label': 'ant design' }}
             />
             <Typography>Real Data</Typography>
@@ -218,6 +248,80 @@ const Settings = () => {
               Confirm
             </Button>
           </Stack>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="firstName">FirstName :</label>
+            <input
+              type={'text'}
+              id="firstName"
+              name="firstName"
+              value={firstName}
+              onChange={(e) => {
+                setfirstName(e.target.value)
+              }}
+            />
+            <br />
+            <label htmlFor="lastName">LastName :</label>
+            <input
+              type={'text'}
+              id="lastName"
+              name="lastName"
+              value={lastName}
+              onChange={(e) => {
+                setlastName(e.target.value)
+              }}
+            />
+            <br />
+            <label htmlFor="email">Email :</label>
+            <input
+              type={'email'}
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => {
+                setemail(e.target.value)
+              }}
+            />
+            <br />
+            <label htmlFor="password">Password :</label>
+            <input
+              type={'password'}
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => {
+                setpassword(e.target.value)
+              }}
+            />
+            <br />
+            <label htmlFor="username">UserName :</label>
+            <input
+              type={'text'}
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => {
+                setusername(e.target.value)
+              }}
+            />
+            <br />
+            <label htmlFor="gov">Gov :</label>
+            <select
+              onChange={(e) => {
+                setgov(e.target.value)
+              }}
+              value={gov}
+            >
+              <option value="">Select Gov</option>
+              {fake.map((gov) => {
+                return (
+                  <option key={gov.id} value={gov.id}>
+                    {gov.name}
+                  </option>
+                )
+              })}
+            </select>
+            <input type={'submit'} value="Confirm" />
+          </form>
         </Stack>
       </div>
     </div>
