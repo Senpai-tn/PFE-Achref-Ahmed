@@ -35,22 +35,13 @@ const Home = () => {
       )
     }).length
     if (month > 0) {
-      console.log('>0')
       var previousMonth = array.filter((obj) => {
         return (
           new Date(obj.createdAt).getMonth() == month - 1 &&
           new Date(obj.createdAt).getFullYear() == year
         )
       }).length
-      console.log(previousMonth)
-      var coef = thisMonth > previousMonth ? 1 : -1
-      if (thisMonth != 0 && previousMonth != 0) {
-        return coef == 1
-          ? (thisMonth / previousMonth) * 100
-          : (thisMonth / previousMonth) * 100 - 100
-      } else {
-        return (0 - previousMonth + thisMonth) * 100
-      }
+      return thisMonth - previousMonth
     } else {
       var previousMonth = array.filter((obj) => {
         return (
@@ -58,14 +49,8 @@ const Home = () => {
           new Date(obj.createdAt).getFullYear() == year - 1
         )
       }).length
-      var coef = thisMonth > previousMonth ? 1 : -1
-      if (thisMonth != 0 && previousMonth != 0) {
-        return coef == 1
-          ? (thisMonth / previousMonth) * 100
-          : (thisMonth / previousMonth) * 100 - 100
-      } else {
-        return (0 - previousMonth + thisMonth) * 100
-      }
+      console.log(thisMonth, previousMonth)
+      return thisMonth - previousMonth
     }
   }
 

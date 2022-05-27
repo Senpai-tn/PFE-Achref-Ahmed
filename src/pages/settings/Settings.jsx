@@ -114,11 +114,11 @@ const Settings = () => {
   }
 
   const handleNbRows = () => {
-    if (nbRows > 12 || nbRows < 1) {
+    if (nbRows < 1) {
       setShowSnackbar(true)
       setMessage({
         severity: 'error',
-        text: 'Number of rows must be between 1 and 12',
+        text: 'Number of rows must be great than 1',
       })
     } else {
       setShowSnackbar(true)
@@ -140,6 +140,11 @@ const Settings = () => {
     gov != '' && (tempUser.govId = gov)
     password != '' && (tempUser.password = bcrypt.hashSync(password))
     updateProfile(dispatch, state, tempUser)
+    setShowSnackbar(true)
+    setMessage({
+      severity: 'success',
+      text: 'Saved',
+    })
   }
 
   return (
@@ -248,80 +253,102 @@ const Settings = () => {
               Confirm
             </Button>
           </Stack>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="firstName">FirstName :</label>
-            <input
-              type={'text'}
-              id="firstName"
-              name="firstName"
-              value={firstName}
-              onChange={(e) => {
-                setfirstName(e.target.value)
-              }}
-            />
-            <br />
-            <label htmlFor="lastName">LastName :</label>
-            <input
-              type={'text'}
-              id="lastName"
-              name="lastName"
-              value={lastName}
-              onChange={(e) => {
-                setlastName(e.target.value)
-              }}
-            />
-            <br />
-            <label htmlFor="email">Email :</label>
-            <input
-              type={'email'}
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => {
-                setemail(e.target.value)
-              }}
-            />
-            <br />
-            <label htmlFor="password">Password :</label>
-            <input
-              type={'password'}
-              id="password"
-              name="password"
-              value={password}
-              onChange={(e) => {
-                setpassword(e.target.value)
-              }}
-            />
-            <br />
-            <label htmlFor="username">UserName :</label>
-            <input
-              type={'text'}
-              id="username"
-              name="username"
-              value={username}
-              onChange={(e) => {
-                setusername(e.target.value)
-              }}
-            />
-            <br />
-            <label htmlFor="gov">Gov :</label>
-            <select
-              onChange={(e) => {
-                setgov(e.target.value)
-              }}
-              value={gov}
-            >
-              <option value="">Select Gov</option>
-              {fake.map((gov) => {
-                return (
-                  <option key={gov.id} value={gov.id}>
-                    {gov.name}
-                  </option>
-                )
-              })}
-            </select>
-            <input type={'submit'} value="Confirm" />
-          </form>
+          <br />
+
+          <div
+            style={{
+              padding: '10px 50px',
+              background: '#e1f3e563',
+              borderRadius: '50px',
+            }}
+          >
+            <h2 style={{ textAlign: 'center' }}>edit profile</h2>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="firstName">FirstName :</label>
+              <input
+                type={'text'}
+                className="form-control"
+                id="firstName"
+                name="firstName"
+                value={firstName}
+                onChange={(e) => {
+                  setfirstName(e.target.value)
+                }}
+              />
+              <br />
+              <label htmlFor="lastName">LastName :</label>
+              <input
+                type={'text'}
+                className="form-control"
+                id="lastName"
+                name="lastName"
+                value={lastName}
+                onChange={(e) => {
+                  setlastName(e.target.value)
+                }}
+              />
+              <br />
+              <label htmlFor="email">Email :</label>
+              <input
+                type={'email'}
+                className="form-control"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => {
+                  setemail(e.target.value)
+                }}
+              />
+              <br />
+              <label htmlFor="password">Password :</label>
+              <input
+                type={'password'}
+                className="form-control"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => {
+                  setpassword(e.target.value)
+                }}
+              />
+              <br />
+              <label htmlFor="username">UserName :</label>
+              <input
+                type={'text'}
+                className="form-control"
+                id="username"
+                name="username"
+                value={username}
+                onChange={(e) => {
+                  setusername(e.target.value)
+                }}
+              />
+              <br />
+              <label htmlFor="gov">Gov :</label>
+              <select
+                className="form-control"
+                onChange={(e) => {
+                  setgov(e.target.value)
+                }}
+                value={gov}
+              >
+                <option value="">Select Gov</option>
+                {fake.map((gov) => {
+                  return (
+                    <option key={gov.id} value={gov.id}>
+                      {gov.name}
+                    </option>
+                  )
+                })}
+              </select>
+              <br />
+              <input
+                type={'submit'}
+                value="Confirm"
+                className="btn btn-success"
+              />
+            </form>
+          </div>
         </Stack>
       </div>
     </div>

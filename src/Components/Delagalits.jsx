@@ -86,13 +86,13 @@ const Delagalist = ({ rows, columns }) => {
           label: 'email',
         },
         {
-          id: 3,
+          id: 4,
           numeric: false,
           disablePadding: true,
           label: 'gov',
         },
         {
-          id: 3,
+          id: 5,
           numeric: false,
           disablePadding: true,
           label: 'nb farms',

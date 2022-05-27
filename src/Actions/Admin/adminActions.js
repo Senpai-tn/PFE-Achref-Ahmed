@@ -1,4 +1,5 @@
 import axios from "axios";
+import { get } from "jquery";
 
 const fake = [
   {
@@ -27,13 +28,19 @@ const fake = [
 const getAllAdmins = (dispatch, state) => {
   try {
     if (state.isRealData) {
-      axios.get("http://41.231.54.51/server/users").then((res) => {
-        dispatch({
-          type: "adminsList",
-          admins: res.data,
-          isRealData: false,
+      axios
+        .get("http://41.231.54.51/server/users")
+        .then((res) => {
+          console.log(res);
+          dispatch({
+            type: "adminsList",
+            admins: res.data,
+            isRealData: true,
+          });
+        })
+        .catch((er) => {
+          console.log("error");
         });
-      });
     } else {
       dispatch({
         type: "adminsList",

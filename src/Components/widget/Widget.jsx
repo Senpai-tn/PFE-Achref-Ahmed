@@ -10,9 +10,8 @@ import { useTranslation } from 'react-i18next'
 import { Box, Button, Tooltip, Typography } from '@mui/material'
 
 const Widget = ({ type, amount, diff }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   let data
-  console.log(diff)
 
   switch (type) {
     case 'annonceur':
@@ -81,11 +80,15 @@ const Widget = ({ type, amount, diff }) => {
       </div>
       <div className="right">
         <div className="percentage positive">
-          <Tooltip title={'Progress from the last month'} followCursor>
+          <Tooltip title={t('Progress from the last month')} followCursor>
             <Box>
-              <Typography>{diff} %</Typography>
+              <Typography>
+                {diff > 0 ? '+' + diff : diff} {t(type)}
+              </Typography>
               {diff > 0 ? (
                 <ArrowUpwardIcon style={{ color: 'green' }} />
+              ) : diff === 0 ? (
+                <></>
               ) : (
                 <ArrowDownwardIcon style={{ color: 'red' }} />
               )}

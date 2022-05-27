@@ -21,11 +21,12 @@ import Login from "./pages/login/Login";
 // App Component
 const App = () => {
   const { darkMode } = useContext(DarkModeContext);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user"))); // pour convertir string vers un objet
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
   }, [localStorage.getItem("user")]);
+
   return (
     <Provider store={store}>
       <div className={darkMode ? "app darkmode" : "app"}>
@@ -40,12 +41,14 @@ const App = () => {
               <Route path="/settings" element={<Settings />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="*" element={<Profile />} />
             </Routes>
           </BrowserRouter>
         ) : (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="*" element={<Login />} />
             </Routes>
           </BrowserRouter>
         )}

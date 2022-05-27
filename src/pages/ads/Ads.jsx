@@ -11,11 +11,15 @@ import 'datatables.net-dt/js/dataTables.dataTables'
 import 'datatables.net-dt/css/jquery.dataTables.min.css'
 import $ from 'jquery'
 import { Row, Col } from 'antd'
-import Search from '../../Components/search/Search'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fake } from '../../Actions/Govs/govsActions'
+import { adsAction } from '../../Actions/Ads/useAction'
 
 const Ads = () => {
+  const { getAllAds } = adsAction
+  const dispatch = useDispatch()
+
+  const state = useSelector((state) => state)
   useEffect(() => {
     //initialize datatable
     $(document).ready(function () {})
@@ -26,7 +30,6 @@ const Ads = () => {
       .draw()
   }, [])
 
-  const state = useSelector((state) => state)
   return (
     <div className="ads">
       <Sidebar />
@@ -44,12 +47,13 @@ const Ads = () => {
                   <th>id</th>
                   <th>status</th>
                   <th>gov</th>
+                  <th>nb requests</th>
                 </tr>
               </thead>
               <tbody>
                 {state.ads.map((ad) => {
                   return (
-                    <tr>
+                    <tr key={ad.id}>
                       <td>{ad.id}</td>
                       <td>{ad.status == 1 ? 'Active' : 'Inactive'}</td>
                       <td>
@@ -60,6 +64,7 @@ const Ads = () => {
                             return obj.id == ad.govId
                           }).name}
                       </td>
+                      <td>{ad.searchers ? ad.searchers.length : '0'}</td>
                     </tr>
                   )
                 })}

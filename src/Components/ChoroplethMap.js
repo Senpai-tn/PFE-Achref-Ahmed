@@ -52,7 +52,7 @@ class ChoroplethMap extends Component {
           }
           // tooltip content
           return [
-            '<div class="hoverinfo">',
+            '<div className="hoverinfo">',
             "<strong>",
             geo.properties.name,
             "</strong>",

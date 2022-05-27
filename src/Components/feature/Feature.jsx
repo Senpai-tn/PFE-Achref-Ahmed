@@ -33,19 +33,21 @@ const Feature = () => {
                 state.ads.length) *
               100
             ).toFixed(2)}
-            text={(
-              (state.ads.filter((ad) => {
-                return ad.status == 1
-              }).length /
-                state.ads.length) *
-              100
-            ).toFixed(2)}
+            text={
+              (
+                (state.ads.filter((ad) => {
+                  return ad.status == 1
+                }).length /
+                  state.ads.length) *
+                100
+              ).toFixed(2) + '%'
+            }
             strokeWidth={5}
           />
         </div>
         <p className="title">Valid ads</p>
 
-        <p className="amount">{totalAmount}</p>
+        <p className="amount">{totalAmount} TND</p>
         <p className="desc">
           Previous transactions processing .All payments are included.
         </p>

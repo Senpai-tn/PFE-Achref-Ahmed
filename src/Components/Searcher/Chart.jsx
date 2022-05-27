@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { PieChart, Pie, Sector } from 'recharts'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180
   const {
@@ -77,32 +78,44 @@ const renderActiveShape = (props) => {
 const Chart = () => {
   const { t } = useTranslation()
   const [activeIndex, setActiveIndex] = useState(0)
+  const state = useSelector((state) => state)
+  const [data, setData] = useState([])
   const onPieEnter = useCallback(
     (_, index) => {
       setActiveIndex(index)
     },
     [setActiveIndex],
   )
-  const data = [
-    { name: `${t('between')} 5 ${t('and')} 10`, value: 400 },
-    { name: `${t('between')} 10 ${t('and')} 15`, value: 400 },
-    { name: `${t('between')} 15 ${t('and')} 20`, value: 800 },
-    { name: `${t('between')} 20 ${t('and')} 30`, value: 900 },
-  ]
+
+  useEffect(() => {
+    var tempData = []
+    state.ages.map((age) => {
+      tempData.push({
+        name: age.name,
+        value: state.chercheurs.filter((chercheur) => {
+          return chercheur.age.id === age.id
+        }).length,
+      })
+    })
+
+    setData(tempData)
+  }, [state])
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <PieChart width={window.innerWidth * 0.6} height={400}>
-        <Pie
-          activeIndex={activeIndex}
-          activeShape={renderActiveShape}
-          data={data}
-          cy={200}
-          innerRadius={75}
-          outerRadius={120}
-          fill="#8884d8"
-          dataKey="value"
-          onMouseEnter={onPieEnter}
-        />
+        {data.length > 0 && (
+          <Pie
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            data={data}
+            cy={200}
+            innerRadius={75}
+            outerRadius={120}
+            fill="#8884d8"
+            dataKey="value"
+            onMouseEnter={onPieEnter}
+          />
+        )}
       </PieChart>
     </div>
   )

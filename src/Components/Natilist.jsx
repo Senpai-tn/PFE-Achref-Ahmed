@@ -14,15 +14,9 @@ const Natilist = () => {
     axios
       .get('http://41.231.54.51/server/languages')
       .then(({ data }) => {
-        console.log(data)
-        /* data compose de 2 attributs */
-        console.log(data.count)
-        console.log(data.list)
         setNatilists(data.list)
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   }, [])
 
   const DataTable = () => {

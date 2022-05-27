@@ -30,10 +30,10 @@ class search extends React.Component {
 
     return (
       <div className="MainDiv">
-        <div class="container-fluid p-3 bg-primary text-white text-center mb-3"></div>
+        <div className="container-fluid p-3 bg-primary text-white text-center mb-3"></div>
 
         <div className="container">
-          <div class="col-sm-3 mb-3">
+          {/* <div class="col-sm-3 mb-3">
             <div class="form-group">
               <label for="sel1" class="form-label">
                 Date Filter:
@@ -44,8 +44,8 @@ class search extends React.Component {
                 className="dateadded form-control"
               />
             </div>
-          </div>
-          <table id="example" class="display">
+          </div> */}
+          <table id="example" className="display">
             <thead>
               <tr>
                 <th>FirstName</th>

@@ -18,6 +18,7 @@ const resources = {
       logout: "Logout",
       between: "between",
       and: "and",
+      "Progress from the last month": "Progress from the last month",
     },
   },
   fr: {
@@ -33,10 +34,8 @@ const resources = {
       logout: "Déconnecter",
       between: "entre",
       and: "et",
+      "Progress from the last month": "Progrès depuis le mois dernier",
     },
-  },
-  esp: {
-    translation: {},
   },
 };
 
